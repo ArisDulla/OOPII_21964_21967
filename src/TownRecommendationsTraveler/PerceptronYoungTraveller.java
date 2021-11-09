@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Perceptron young traveller
  *
  */
-public class PerceptronYoungTraveller extends ClosestCity implements PerceptronTraveller {
+public class PerceptronYoungTraveller implements PerceptronTraveller {
 
 	@Override
 	public ArrayList<String> recommend(City[] cities) {
@@ -55,14 +55,5 @@ public class PerceptronYoungTraveller extends ClosestCity implements PerceptronT
 			}
 		}
 		return convertNamesCities;
-	}
-
-	@Override
-	public String getClosestCityName(ArrayList<String> namesCities, City[] cities) {
-		String closestCityName;
-
-		closestCityName = nearbyCity(namesCities, cities);// extends ClosestCity
-
-		return closestCityName;
 	}
 }

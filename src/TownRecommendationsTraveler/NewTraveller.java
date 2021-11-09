@@ -1,6 +1,7 @@
 package TownRecommendationsTraveler;
 
 import java.util.ArrayList;
+import static TownRecommendationsTraveler.ClosestCity.nearbyCity;
 
 /**
  * 
@@ -44,7 +45,12 @@ public class NewTraveller {
 				for (String city : convertNamesCities) {
 					System.out.println(" --- " + city);
 				}
-				closestCity = newTraveller.getClosestCityName(namesCities, arrayCities);
+				///////////////////////////////////////
+				// nearbyCity(newTraveller, arrayCities);
+				// import static TownRecommendationsTraveler.ClosestCity.nearbyCity;
+
+				closestCity = nearbyCity(newTraveller, arrayCities);
+
 				System.out.println("\n\nclosest city = " + closestCity);
 			}
 		}

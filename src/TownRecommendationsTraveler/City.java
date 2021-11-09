@@ -88,6 +88,8 @@ public class City {
 	protected static City[] createObjects() throws IOException, WikipediaNoArcticleException {
 		City[] arrayTowns = new City[10];
 
+		System.out.println(" \n\n" + " ---- RETRIEVE DATA loading...");
+
 		arrayTowns[0] = createNewCity("rome", "it"); // ROME
 		arrayTowns[1] = createNewCity("corfu", "gr"); // CORFU
 		arrayTowns[2] = createNewCity("berlin", "de"); // BERLIN
@@ -132,8 +134,6 @@ public class City {
 				continue;
 			}
 		}
-		System.out.println(
-				" \n\n" + " --- " + city + " --- RETRIEVE DATA , convert to vector and save in array ---  loading...");
 		/**
 		 * 
 		 * GET LON
