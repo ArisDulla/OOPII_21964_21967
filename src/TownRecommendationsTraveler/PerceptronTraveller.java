@@ -2,15 +2,11 @@ package TownRecommendationsTraveler;
 
 import java.util.ArrayList;
 
-/**
- * 
- * Interface Perceptron traveller
- *
- */
 public interface PerceptronTraveller {
 
-	public ArrayList<String> recommend(City[] feature);
+	public ArrayList<String> recommend(ArrayList<City> cities, ArrayList<City> recommendedCities);
 
-	public ArrayList<String> recommend(boolean flag, ArrayList<String> feature);
+	public ArrayList<String> recommend(boolean flag, ArrayList<String> cities);
 
+	public ArrayList<String> sortReccomendations(ArrayList<City> list);
 }

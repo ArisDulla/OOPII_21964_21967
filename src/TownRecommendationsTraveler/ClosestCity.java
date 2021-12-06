@@ -2,23 +2,24 @@ package TownRecommendationsTraveler;
 
 import java.util.ArrayList;
 
-/**
- * 
- * Closest city
- *
- */
 public class ClosestCity {
 
-	protected static String nearbyCity(PerceptronTraveller traveller, City[] cities) {
-
+	protected static String nearbyCity(PerceptronTraveller traveller, ArrayList<City> cities) {
+		ArrayList<City> recommendedCities = new ArrayList<City>();
 		double min = 1;
 		String nearbyCity = null;
 		double distance;
 		String cityName;
 		ArrayList<String> namesCities;
 
-		namesCities = traveller.recommend(cities);
+		/**
+		 * Search recommended cities
+		 */
+		namesCities = traveller.recommend(cities, recommendedCities);
 
+		/**
+		 * search closest City
+		 */
 		for (String x : namesCities) {
 			for (City c : cities) {
 
@@ -38,6 +39,9 @@ public class ClosestCity {
 
 			System.out.println("there are no cities in the array");
 		}
+		/**
+		 * @return closest City
+		 */
 		return nearbyCity;
 	}
 }

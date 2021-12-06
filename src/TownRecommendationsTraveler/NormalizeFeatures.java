@@ -1,13 +1,16 @@
 package TownRecommendationsTraveler;
 
 /**
- * 
  * Convert features to vector
- *
  */
 public class NormalizeFeatures {
 
-	// Distance normalize
+	/**
+	 * Distance normalize MAXDIST
+	 * 
+	 * @param distance
+	 * @return distance
+	 */
 	protected static double distanceNormalize(double distance) {
 		double maxDist = 15325, sum;
 
@@ -15,7 +18,12 @@ public class NormalizeFeatures {
 		return sum;
 	}
 
-	// Cloods normalize
+	/**
+	 * Cloods normalize
+	 * 
+	 * @param cloods
+	 * @return cloods/100
+	 */
 	protected static double cloodsNormalize(double cloods) {
 		double sum;
 
@@ -27,7 +35,12 @@ public class NormalizeFeatures {
 		return sum;
 	}
 
-	// Temp normalize
+	/**
+	 * Temp normalize
+	 * 
+	 * @param temp
+	 * @return temp
+	 */
 	protected static double tempNormalize(double temp) {
 		double min = 184.0, max = 331.0, sum;
 
@@ -35,7 +48,12 @@ public class NormalizeFeatures {
 		return sum;
 	}
 
-	// Article normalize
+	/**
+	 * Article normalize count words
+	 * 
+	 * @param lengthFeatureKeyWords
+	 * @return array
+	 */
 	protected static double[] articleNormalize(int[] lengthFeatureKeyWords) {
 		double lengthDoubleVectorKeyWords[];
 		lengthDoubleVectorKeyWords = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };

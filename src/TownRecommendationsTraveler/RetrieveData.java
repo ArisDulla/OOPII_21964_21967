@@ -1,97 +1,70 @@
 package TownRecommendationsTraveler;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
+import exception.CityException;
 import exception.WikipediaNoArcticleException;
 import weather.OpenWeatherMap;
 import wikipedia.MediaWiki;
 
 /**
- * 
- * @author aris
- * 
- *         Retrieve data, Open Weather Map
+ * Retrieve data, Open Weather Map ,Wikipedia
  */
-
 public class RetrieveData {
 
 	private final static String appid = "5e2b77ded0426c75a14930d4f5ec54bb";
 
-	// GET LOT
-	protected static double getLonOpenWeatherMap(String city, String domain) throws IOException {
+	/**
+	 * Retrieve data form Open Weather Map
+	 */
+	protected static void getDataOpenWeatherMap(String city, String domain, double[] array)
+			throws IOException, CityException {
 
 		ObjectMapper mapper = new ObjectMapper();
+		double lon, lat, temperature, clounds;
 
-		OpenWeatherMap weather_obj = mapper.readValue(new URL(
-				"http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + domain + "&APPID=" + appid + ""),
-				OpenWeatherMap.class);
+		try {
+			OpenWeatherMap weather_obj = mapper.readValue(new URL(
+					"http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + domain + "&APPID=" + appid + ""),
+					OpenWeatherMap.class);
 
-		double lon;
+			lon = weather_obj.getCoord().getLon();
+			lat = weather_obj.getCoord().getLat();
+			temperature = (weather_obj.getMain()).getTemp();
+			clounds = weather_obj.getClouds().getAll();
 
-		lon = weather_obj.getCoord().getLon();
+		} catch (JsonParseException e) {
+			throw new CityException();
+		} catch (MalformedURLException e) {
+			throw new CityException();
+		} catch (NullPointerException e) {
+			throw new CityException();
+		} catch (Exception e) {
+			throw new CityException();
+		}
 
-		return lon;
+		array[0] = lon;
+		array[1] = lat;
+		array[2] = temperature;
+		array[3] = clounds;
+
 	}
 
-	// GET LON
-	protected static double getLatOpenWeatherMap(String city, String domain) throws IOException {
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		OpenWeatherMap weather_obj = mapper.readValue(new URL(
-				"http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + domain + "&APPID=" + appid + ""),
-				OpenWeatherMap.class);
-
-		double lat;
-
-		lat = weather_obj.getCoord().getLat();
-
-		return lat;
-	}
-
-	// GET TEMPERATURE
-	protected static double getTemperatureOpenWeatherMap(String city, String domain) throws IOException {
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		OpenWeatherMap weather_obj = mapper.readValue(new URL(
-				"http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + domain + "&APPID=" + appid + ""),
-				OpenWeatherMap.class);
-
-		double temperature;
-
-		temperature = (weather_obj.getMain()).getTemp();
-
-		return temperature;
-	}
-
-	// GET CLOUNDS
-	protected static double getCloundsOpenWeatherMap(String city, String domain) throws IOException {
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		OpenWeatherMap weather_obj = mapper.readValue(new URL(
-				"http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + domain + "&APPID=" + appid + ""),
-				OpenWeatherMap.class);
-
-		double clounds;
-
-		clounds = weather_obj.getClouds().getAll();
-
-		return clounds;
-	}
-
-	// GET ARTICLE WIKPEDIA
+	/**
+	 * Retrieve Article form Wikipedia
+	 */
 	protected static String getArticleWikipedia(String city) throws IOException, WikipediaNoArcticleException {
 
 		String article = "";

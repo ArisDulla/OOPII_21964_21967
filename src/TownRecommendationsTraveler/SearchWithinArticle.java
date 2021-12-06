@@ -1,12 +1,10 @@
 package TownRecommendationsTraveler;
 
-/**
- * 
- * Search with in article
- *
- */
 public class SearchWithinArticle {
 
+	/**
+	 * Search with in article and count featues
+	 */
 	protected static int[] searchWordsInArticle(String articleWikipediaStirngText) {
 
 		String[][] vectorsKeyWords;

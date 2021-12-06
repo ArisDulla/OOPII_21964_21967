@@ -1,16 +1,12 @@
 package TownRecommendationsTraveler;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-/**
- * 
- * Perceptron middle traveller
- *
- */
 public class PerceptronMiddleTraveller implements PerceptronTraveller {
 
 	@Override
-	public ArrayList<String> recommend(City[] cities) {
+	public ArrayList<String> recommend(ArrayList<City> cities, ArrayList<City> recommendedCities) {
 		double[] weightsBias = new double[] { 1, 0, 1, 1, 1, 1, -1, 0, 0, 0, -0.5 };
 		// [0] = CAFE , [1] = SEA, [2] = MUSEUMS, [3] = RESTAURANTS, [4] = STADIUM,
 		// [5] = BAR ,[6] = AMUSEMENT PARK, [7] = KLEVIN, [8] = CLOUNDS, [9] = COORDS
@@ -20,9 +16,12 @@ public class PerceptronMiddleTraveller implements PerceptronTraveller {
 		double[] array;
 		double wx;
 
-		for (int j = 0; j < 10; j++) {
+		int len;
+
+		len = cities.size();
+		for (int j = 0; j < len; j++) {
 			wx = 0;
-			array = cities[j].getVectorFeatures();
+			array = cities.get(j).getVectorFeatures();
 
 			for (int i = 0; i < 10; i++) {
 				wx = wx + array[i] * weightsBias[i];
@@ -31,7 +30,8 @@ public class PerceptronMiddleTraveller implements PerceptronTraveller {
 			// heavy Side step ---------------
 			wx += weightsBias[10];
 			if (wx > 0) {
-				namesCities.add(cities[j].getCityName());
+				namesCities.add(cities.get(j).getCityName());
+				recommendedCities.add(cities.get(j));
 			}
 		}
 		return namesCities;
@@ -55,5 +55,24 @@ public class PerceptronMiddleTraveller implements PerceptronTraveller {
 			}
 		}
 		return convertNamesCities;
+	}
+
+	/**
+	 * --Ascending timestamp--
+	 */
+	@Override
+	public ArrayList<String> sortReccomendations(ArrayList<City> list) {
+
+		ascendingTimeCompare coordsCompare = new ascendingTimeCompare();
+		ArrayList<String> namesCities = new ArrayList<String>();
+
+		Collections.sort(list, coordsCompare);
+
+		System.out.println("\n\n    --Ascending timestamp-- (middle traveller)  \n\n");
+		for (City city : list) {
+			namesCities.add(city.getCityName());
+			System.out.println("  " + city.getDate() + " " + city.getCityName());
+		}
+		return namesCities;
 	}
 }

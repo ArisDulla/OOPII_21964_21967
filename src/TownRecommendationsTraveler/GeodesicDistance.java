@@ -1,12 +1,16 @@
 package TownRecommendationsTraveler;
 
-/**
- * 
- * This routine calculates the distance between two points
- *
- */
 public class GeodesicDistance {
-
+	/**
+	 * This routine calculates the distance between two points
+	 * 
+	 * @param lat1 athens
+	 * @param lon1 athens
+	 * @param lat2 new CITY
+	 * @param lon2 new CITY
+	 * @param unit kilometer ...
+	 * @return distance athens - new CITY
+	 */
 	protected static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
 		if ((lat1 == lat2) && (lon1 == lon2)) {
 			return 0;

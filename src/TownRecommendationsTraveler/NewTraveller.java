@@ -3,25 +3,25 @@ package TownRecommendationsTraveler;
 import java.util.ArrayList;
 import static TownRecommendationsTraveler.ClosestCity.nearbyCity;
 
-/**
- * 
- * Create new traveller
- *
- */
 public class NewTraveller {
 
-	public static void createNewTraveller(City[] arrayCities) {
+	/**
+	 * CREAT NEW TRAVELLER and recommend cities
+	 * 
+	 * @param arrayCities
+	 * @param age
+	 */
+	public static void createNewTraveller(ArrayList<City> arrayCities, int age) {
+
+		ArrayList<City> recommendedCities = new ArrayList<City>();
 
 		ArrayList<String> namesCities;
 		ArrayList<String> convertNamesCities;
 		String closestCity;
-		int age;
 		boolean flag;
-
 		PerceptronTraveller newTraveller = null;
 
 		flag = true; // SET BOOLEAN ------------
-		age = 19; // SET AGE ------------------
 
 		if (age >= 16 && age <= 115) {
 			if ((age >= 16) && (age <= 25)) {
@@ -35,7 +35,7 @@ public class NewTraveller {
 			}
 			if (newTraveller != null) {
 
-				namesCities = newTraveller.recommend(arrayCities);
+				namesCities = newTraveller.recommend(arrayCities, recommendedCities);
 				System.out.println("\n\nRecommened:");
 				for (String city : namesCities) {
 					System.out.println("  ---  " + city);
@@ -46,12 +46,20 @@ public class NewTraveller {
 					System.out.println(" --- " + city);
 				}
 				///////////////////////////////////////
-				// nearbyCity(newTraveller, arrayCities);
 				// import static TownRecommendationsTraveler.ClosestCity.nearbyCity;
-
+				/**
+				 * closest City
+				 */
 				closestCity = nearbyCity(newTraveller, arrayCities);
 
 				System.out.println("\n\nclosest city = " + closestCity);
+
+				ArrayList<City> list = new ArrayList<City>();
+
+				for (int i = 0; i < recommendedCities.size(); i++) {
+					list.add(recommendedCities.get(i));
+				}
+				newTraveller.sortReccomendations(list);
 			}
 		}
 	}

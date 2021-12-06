@@ -1,9 +1,11 @@
 package TownRecommendationsTraveler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.time.Instant;
+import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import exception.CityException;
 import exception.WikipediaNoArcticleException;
 
 import static TownRecommendationsTraveler.RetrieveData.*;
@@ -11,37 +13,25 @@ import static TownRecommendationsTraveler.GeodesicDistance.*;
 import static TownRecommendationsTraveler.SearchWithinArticle.*;
 import static TownRecommendationsTraveler.NormalizeFeatures.*;
 
-/**
- * 
- * City
- *
- */
+import static TownRecommendationsTraveler.Inputs.*;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class City {
 
+	public City() {
+	}
+
+	// Comparator<City>
 	private final int sizeVectorFeatures = 10; // Size of the vector representation features
 	// Eνα vector representation ως ένα array με 10 features (κριτήρια) της πόλης.
 	private double[] vectorFeatures = new double[sizeVectorFeatures];
 	// [0] = CAFE , [1] = SEA, [2] = MUSEUMS, [3] = RESTAURANTS, [4] = STADIUM,
 	// [5] = BAR ,[6] = AMUSEMENT PARK, [7] = KLEVIN, [8] = CLOUNDS, [9] = COORDS
-
 	private String cityName;
+	private long date;
 
 	/**
-	 * Constructor city
-	 * 
-	 * The Elements ( VECTORS ) set in array vectors:
-	 * 
-	 * @param cafe
-	 * @param sea
-	 * @param museums
-	 * @param restaurant
-	 * @param stadium
-	 * @param bar
-	 * @param amusementPark
-	 * @param klevin
-	 * @param clounds
-	 * @param coords
-	 * @param cityName
+	 * Constructor city The Elements ( VECTORS 0-1) set in array vectors:
 	 */
 	public City(double cafe, double sea, double museums, double restaurant, double stadium, double bar,
 			double amusementPark, double klevin, double clounds, double coords, String cityName) {
@@ -57,23 +47,237 @@ public class City {
 		this.vectorFeatures[8] = clounds;
 		this.vectorFeatures[9] = coords;
 		this.cityName = cityName;
+
+		Instant instant = Instant.now();
+		this.date = instant.getEpochSecond();
 	}
 
-	/////////////
-	// Setters
+	/**
+	 * CREAT NEW CITY
+	 * 
+	 * @param cities (add new city in array (cities))
+	 * @return new city
+	 * @throws Exception WRONG INPUT
+	 */
+	protected static City createNewCity(ArrayList<City> cities) throws Exception {
+		double lat, lon = 0, temperature, clounds, distance, coords, klevin, cloodsNormalize, articleVectors[];
 
-	public void setVectorFeatures(double[] vectorFeatures) {
+		// ------------- STEPS----------------------
+		//
+		// 1. Input new city
+		// 2. Collect DATA form WIKI AND OPEN DATA
+		// 3. Get distance athens to new CITY
+		// 4. Search with in article and count words
+		// 5. Normalize DATA
+		// 6. create new city (DATA) -
+
+		int flag, flag2;
+		String article = null, unit = "K";
+		int[] lenghtVector;
+		double[] array = new double[4];
+		String city;
+		String[] cityNameDomain = new String[2];
+
+		////////////////////// OPEN DATA WEATHER MAP //////////////////////////////////
+		/**
+		 * RETRIEVE DATA ## import static TownRecommendationsTraveler.RetrieveData.*;
+		 */
+
+		while (true) {
+
+			/**
+			 * input name new city
+			 */
+			if (inputNameCity(cities, cityNameDomain)) {
+				return null;
+			}
+			flag = 1;
+			while (flag == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
+				try {
+					/**
+					 * GET ARTICLE
+					 */
+					article = getArticleWikipedia(cityNameDomain[0]);
+					flag = 0;
+					break;
+
+				} catch (WikipediaNoArcticleException e) {
+
+					System.out.println("\n" + e.getMessage());
+					/**
+					 * input name new city again
+					 */
+					if (inputNameCity(cities, cityNameDomain)) {
+						return null;
+					}
+
+					flag = 1;
+					continue;
+				}
+			}
+
+			/**
+			 * GET LON , LAT ,TEMPERATUR form OpenWeatherMap
+			 */
+
+			flag2 = 1;
+			while (flag2 == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
+				try {
+					/**
+					 * GET ARTICLE
+					 *
+					 */
+					getDataOpenWeatherMap(cityNameDomain[0], cityNameDomain[1], array);
+					flag2 = 0;
+					break;
+
+				} catch (CityException e) {
+
+					System.out.println("\n" + e.getMessage());
+					break;
+				}
+			}
+			if (flag2 == 1) {
+				continue;
+			} else {
+				break;
+			}
+		}
+		city = cityNameDomain[0];
+
+		lon = array[0];
+		lat = array[1];
+		temperature = array[2];
+		clounds = array[3];
+
+		//////////////////////////////////////////////////////////////
+		/**
+		 * Get distance athens CITY ## import static GeodesicDistance
+		 */
+		distance = distance(37.9795, 23.7162, lat, lon, unit);
+
+		//////////////////////////////////////////////////////////////
+		/**
+		 * Search with in article and count words ## import static SearchWithinArticle
+		 */
+		lenghtVector = searchWordsInArticle(article);
+
+		////////////////////////////////////////////////////////
+		/**
+		 * Normalize Features ## import static NormalizeFeatures
+		 */
+		articleVectors = articleNormalize(lenghtVector);// #1
+		coords = distanceNormalize(distance); // #2
+		klevin = tempNormalize(temperature); // #3
+		cloodsNormalize = cloodsNormalize(clounds); // #4
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/**
+		 * CREATE NEW CITY #1 #2 #3 #4
+		 */
+		City newCity = new City(articleVectors[0], articleVectors[1], articleVectors[2], articleVectors[3],
+				articleVectors[4], articleVectors[5], articleVectors[6], klevin, cloodsNormalize, coords, city);
+		/*
+		 * @return new object city
+		 */
+		return newCity;
+
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Setters
+
+	protected void setVectorFeatures(double[] vectorFeatures) {
 		this.vectorFeatures = vectorFeatures;
+	}
+
+	public void setDate(long date) {
+		this.date = date;
+	}
+
+	public void setCafeVector(double cafe) {
+		this.vectorFeatures[0] = cafe;
+	}
+
+	public void getSeaVector(double sea) {
+		this.vectorFeatures[1] = sea;
+	}
+
+	public void setMuseumsVector(double museums) {
+		this.vectorFeatures[2] = museums;
+	}
+
+	public void setRestaurantVector(double restaurant) {
+		this.vectorFeatures[3] = restaurant;
+	}
+
+	public void setStadiumVector(double stadium) {
+		this.vectorFeatures[4] = stadium;
+	}
+
+	public void setBarVector(double bar) {
+		this.vectorFeatures[5] = bar;
+	}
+
+	public void setAmusementParkVector(double amusement) {
+		this.vectorFeatures[6] = amusement;
+	}
+
+	public void setKlevinVector(double klevin) {
+		this.vectorFeatures[7] = klevin;
+	}
+
+	public void setCloundsVector(double clounds) {
+		this.vectorFeatures[8] = clounds;
+	}
+
+	public void setDistance(double distance) {
+		this.vectorFeatures[9] = distance;
 	}
 
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
-	///////////
-	// Getters
 
-	public double[] getVectorFeatures() {
-		return vectorFeatures;
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Getters
+	public long getDate() {
+		return date;
+	}
+
+	public double getCafeVector() {
+		return vectorFeatures[0];
+	}
+
+	public double getSeaVector() {
+		return vectorFeatures[1];
+	}
+
+	public double getMuseumsVector() {
+		return vectorFeatures[2];
+	}
+
+	public double getRestaurantVector() {
+		return vectorFeatures[3];
+	}
+
+	public double getStadiumVector() {
+		return vectorFeatures[4];
+	}
+
+	public double getBarVector() {
+		return vectorFeatures[5];
+	}
+
+	public double getAmusementParkVector() {
+		return vectorFeatures[6];
+	}
+
+	public double getKlevinVector() {
+		return vectorFeatures[7];
+	}
+
+	public double getCloundsVector() {
+		return vectorFeatures[8];
 	}
 
 	public double getDistance() {
@@ -83,116 +287,8 @@ public class City {
 	public String getCityName() {
 		return cityName;
 	}
-	//////////
 
-	protected static City[] createObjects() throws IOException, WikipediaNoArcticleException {
-		City[] arrayTowns = new City[10];
-
-		System.out.println(" \n\n" + " ---- RETRIEVE DATA loading...");
-
-		arrayTowns[0] = createNewCity("rome", "it"); // ROME
-		arrayTowns[1] = createNewCity("corfu", "gr"); // CORFU
-		arrayTowns[2] = createNewCity("berlin", "de"); // BERLIN
-		arrayTowns[3] = createNewCity("london", "uk"); // LONDON
-		arrayTowns[4] = createNewCity("zurich", "ch"); // ZURICH
-		arrayTowns[5] = createNewCity("toronto", "ca"); // TORONTO
-		arrayTowns[6] = createNewCity("boston", "us"); // BOSTON
-		arrayTowns[7] = createNewCity("moscow", "ru"); // MOSCOW
-		arrayTowns[8] = createNewCity("beijing", "cn"); // BEIJING
-		arrayTowns[9] = createNewCity("paris", "fr"); // WELLINGTON
-
-		return arrayTowns;
-	}
-
-	private static City createNewCity(String city, String domain) throws IOException, WikipediaNoArcticleException {
-		double lat, lon, temperature, clounds, distance, coords, klevin, cloodsNormalize, articleVectors[];
-
-		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-		int flag;
-		String article = null, unit = "K";
-		int[] lenghtVector;
-
-		/////////////// ------- OPEN DATA WEATHER MAP
-		// RETRIEVE DATA ## import static TownRecommendationsTraveler.RetrieveData.*;
-
-		flag = 1;
-		while (flag == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
-			try {
-				/**
-				 * GET ARTICLE
-				 *
-				 */
-				article = getArticleWikipedia(city);
-				flag = 0;
-				break;
-
-			} catch (WikipediaNoArcticleException e) {
-				System.out.println("\n" + e.getMessage());
-				System.out.print("Type a correct city name: ");
-				city = stdin.readLine();
-				flag = 1;
-				continue;
-			}
-		}
-		/**
-		 * 
-		 * GET LON
-		 */
-		lon = getLonOpenWeatherMap(city, domain);
-		/**
-		 * 
-		 * GET LAT
-		 */
-		lat = getLatOpenWeatherMap(city, domain);
-		/**
-		 * 
-		 * GET TEMPERATURE
-		 */
-		temperature = getTemperatureOpenWeatherMap(city, domain);
-		/**
-		 * 
-		 * GET CLOUNDS
-		 */
-		clounds = getCloundsOpenWeatherMap(city, domain);
-
-		///////////////////
-		// GEODESIC DISTANCE ## import static GeodesicDistance
-
-		/**
-		 * 
-		 * Get distance athens CITY
-		 */
-		distance = distance(37.9795, 23.7162, lat, lon, unit);
-
-		//////////////////////////////////////////
-		// Search with in article and count words ## import static SearchWithinArticle
-
-		lenghtVector = searchWordsInArticle(article);
-
-		////////////////////
-		// Normalize Features ## import static NormalizeFeatures
-
-		articleVectors = articleNormalize(lenghtVector);// #1
-		coords = distanceNormalize(distance); // #2
-		klevin = tempNormalize(temperature); // #3
-		cloodsNormalize = cloodsNormalize(clounds); // #4
-
-		////////////////////
-		// CREATE NEW CITY #1 #2 #3 #4
-
-		City newCity = new City(articleVectors[0], articleVectors[1], articleVectors[2], articleVectors[3],
-				articleVectors[4], articleVectors[5], articleVectors[6], klevin, cloodsNormalize, coords, city);
-
-		return newCity;
-	}
-
-	////////////
-	// To String
-	public String toString() {
-
-		return "VECTOR \n\n CAFE =  " + vectorFeatures[0] + "\n\n SEA   " + vectorFeatures[1] + "\n\n Museums  "
-				+ vectorFeatures[2] + "\n\n restaurant   " + vectorFeatures[3] + "\n\n Stadium   " + vectorFeatures[4]
-				+ "\n\n bar  " + vectorFeatures[5] + "\n\nAmusementPark  " + vectorFeatures[6] + "\n\nklevin  "
-				+ vectorFeatures[7] + "\n\nclounds  " + vectorFeatures[8] + "\n\ncoords  " + vectorFeatures[9];
+	protected double[] getVectorFeatures() {
+		return vectorFeatures;
 	}
 }
