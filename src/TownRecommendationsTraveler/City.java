@@ -117,14 +117,14 @@ public class City {
 			}
 
 			/**
-			 * GET LON , LAT ,TEMPERATUR form OpenWeatherMap
+			 * GET LON , LAT ,TEMPERATUR ,clounds form OpenWeatherMap
 			 */
 
 			flag2 = 1;
 			while (flag2 == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
 				try {
 					/**
-					 * GET ARTICLE
+					 * GET DATA form OpenWeatherMap 
 					 *
 					 */
 					getDataOpenWeatherMap(cityNameDomain[0], cityNameDomain[1], array);
