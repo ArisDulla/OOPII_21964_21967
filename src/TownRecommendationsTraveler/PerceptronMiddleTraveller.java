@@ -68,10 +68,8 @@ public class PerceptronMiddleTraveller implements PerceptronTraveller {
 
 		Collections.sort(list, coordsCompare);
 
-		System.out.println("\n\n    --Ascending timestamp-- (middle traveller)  \n\n");
 		for (City city : list) {
 			namesCities.add(city.getCityName());
-			System.out.println("  " + city.getDate() + " " + city.getCityName());
 		}
 		return namesCities;
 	}

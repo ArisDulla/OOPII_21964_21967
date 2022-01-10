@@ -14,7 +14,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
-import exception.CityException;
+import exception.OpenDataNoDataException;
 import exception.WikipediaNoArcticleException;
 import weather.OpenWeatherMap;
 import wikipedia.MediaWiki;
@@ -30,7 +30,7 @@ public class RetrieveData {
 	 * Retrieve data form Open Weather Map
 	 */
 	protected static void getDataOpenWeatherMap(String city, String domain, double[] array)
-			throws IOException, CityException {
+			throws IOException, OpenDataNoDataException {
 
 		ObjectMapper mapper = new ObjectMapper();
 		double lon, lat, temperature, clounds;
@@ -46,13 +46,13 @@ public class RetrieveData {
 			clounds = weather_obj.getClouds().getAll();
 
 		} catch (JsonParseException e) {
-			throw new CityException();
+			throw new OpenDataNoDataException(city);
 		} catch (MalformedURLException e) {
-			throw new CityException();
+			throw new OpenDataNoDataException(city);
 		} catch (NullPointerException e) {
-			throw new CityException();
+			throw new OpenDataNoDataException(city);
 		} catch (Exception e) {
-			throw new CityException();
+			throw new OpenDataNoDataException(city);
 		}
 
 		array[0] = lon;

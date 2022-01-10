@@ -67,10 +67,8 @@ public class PerceptronYoungTraveller implements PerceptronTraveller {
 
 		Collections.sort(list, coordsCompare);
 
-		System.out.println("\n\n    --Ascending Coords-- (young traveller)  \n\n");
 		for (City city : list) {
 			namesCities.add(city.getCityName());
-			System.out.println("  " + city.getDistance() * 15325 + " km" + " " + city.getCityName());
 		}
 		return namesCities;
 	}

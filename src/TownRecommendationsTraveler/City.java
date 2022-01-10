@@ -1,11 +1,14 @@
 package TownRecommendationsTraveler;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import exception.CityException;
+import exception.OpenDataNoDataException;
 import exception.WikipediaNoArcticleException;
 
 import static TownRecommendationsTraveler.RetrieveData.*;
@@ -27,6 +30,7 @@ public class City {
 	private double[] vectorFeatures = new double[sizeVectorFeatures];
 	// [0] = CAFE , [1] = SEA, [2] = MUSEUMS, [3] = RESTAURANTS, [4] = STADIUM,
 	// [5] = BAR ,[6] = AMUSEMENT PARK, [7] = KLEVIN, [8] = CLOUNDS, [9] = COORDS
+
 	private String cityName;
 	private long date;
 
@@ -56,10 +60,11 @@ public class City {
 	 * CREAT NEW CITY
 	 * 
 	 * @param cities (add new city in array (cities))
+	 * @param statusLabel 
 	 * @return new city
 	 * @throws Exception WRONG INPUT
 	 */
-	protected static City createNewCity(ArrayList<City> cities) throws Exception {
+	public static City createNewCity(ArrayList<City> cities,String[] cityNameDomain, JLabel statusLabel)  {
 		double lat, lon = 0, temperature, clounds, distance, coords, klevin, cloodsNormalize, articleVectors[];
 
 		// ------------- STEPS----------------------
@@ -76,73 +81,66 @@ public class City {
 		int[] lenghtVector;
 		double[] array = new double[4];
 		String city;
-		String[] cityNameDomain = new String[2];
 
 		////////////////////// OPEN DATA WEATHER MAP //////////////////////////////////
 		/**
 		 * RETRIEVE DATA ## import static TownRecommendationsTraveler.RetrieveData.*;
 		 */
 
-		while (true) {
+		/**
+		 * input name new city
+		 */
+		if (inputNameCity(cities, cityNameDomain,statusLabel)) {
+			return null;
+		}
+		flag = 1;
+		while (flag == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
+			try {
+				/**
+				 * GET ARTICLE
+				 */
+				article = getArticleWikipedia(cityNameDomain[0]);
+				flag = 0;
+				break;
 
-			/**
-			 * input name new city
-			 */
-			if (inputNameCity(cities, cityNameDomain)) {
+			} catch (WikipediaNoArcticleException e) {
+
+				statusLabel.setText(e.getMessage());
+				return null;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				return null;
 			}
-			flag = 1;
-			while (flag == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
-				try {
-					/**
-					 * GET ARTICLE
-					 */
-					article = getArticleWikipedia(cityNameDomain[0]);
-					flag = 0;
-					break;
-
-				} catch (WikipediaNoArcticleException e) {
-
-					System.out.println("\n" + e.getMessage());
-					/**
-					 * input name new city again
-					 */
-					if (inputNameCity(cities, cityNameDomain)) {
-						return null;
-					}
-
-					flag = 1;
-					continue;
-				}
-			}
-
-			/**
-			 * GET LON , LAT ,TEMPERATUR ,clounds form OpenWeatherMap
-			 */
-
-			flag2 = 1;
-			while (flag2 == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
-				try {
-					/**
-					 * GET DATA form OpenWeatherMap 
-					 *
-					 */
-					getDataOpenWeatherMap(cityNameDomain[0], cityNameDomain[1], array);
-					flag2 = 0;
-					break;
-
-				} catch (CityException e) {
-
-					System.out.println("\n" + e.getMessage());
-					break;
-				}
-			}
-			if (flag2 == 1) {
-				continue;
-			} else {
+		}
+		/**
+		 * GET LON , LAT ,TEMPERATUR ,clounds form OpenWeatherMap
+		 */
+		flag2 = 1;
+		while (flag2 == 1) { // ------------------------------------- ##TRY CATCH NAME CITY
+			try {
+				/**
+				 * GET DATA form OpenWeatherMap
+				 *
+				 */
+				getDataOpenWeatherMap(cityNameDomain[0], cityNameDomain[1], array);
+				flag2 = 0;
 				break;
+
+			} catch (OpenDataNoDataException e) {
+
+				statusLabel.setText(e.getMessage());
+				return null;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
 			}
 		}
+		if (flag2 == 1) {
+			return null;
+		}
+
 		city = cityNameDomain[0];
 
 		lon = array[0];

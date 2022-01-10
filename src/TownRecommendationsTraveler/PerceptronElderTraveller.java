@@ -68,11 +68,11 @@ public class PerceptronElderTraveller implements PerceptronTraveller {
 
 		Collections.sort(list, coordsCompare);
 
-		System.out.println("\n\n    --Descending Coords-- (elder traveller)  \n\n");
 		for (City city : list) {
-			namesCities.add(city.getCityName());
-			System.out.println("  " + city.getDistance() * 15325 + " km" + " " + city.getCityName());
+			namesCities.add(city.getCityName());			
 		}
+		
+		
 		return namesCities;
 	}
 }

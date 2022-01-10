@@ -21,15 +21,8 @@ public class JacksonTester {
 
 	/**
 	 * READ DATA FORM FILE and save in arrayTowns
-	 * 
-	 * @param arrayTowns copy cities
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
-	 * @throws IOException
-	 * @throws ParseException
 	 */
-	protected void call(ArrayList<City> arrayTowns)
-			throws JsonParseException, JsonMappingException, IOException, ParseException {
+	public void call(ArrayList<City> arrayTowns) {
 
 		JacksonTester tester = new JacksonTester();
 		ArrayList<City> x;
@@ -55,32 +48,29 @@ public class JacksonTester {
 
 	/**
 	 * CREAT NEW FILE
-	 * 
-	 * @param arrayTowns
-	 *
-	 * @throws JsonGenerationException
-	 * @throws JsonMappingException
-	 * @throws IOException
 	 */
-	protected void writeJSON(ArrayList<City> arrayTowns)
-			throws JsonGenerationException, JsonMappingException, IOException {
+	protected void writeJSON(ArrayList<City> arrayTowns) {
 
 		ObjectMapper mapper = new ObjectMapper();
 		File resultFile = new File("cities.json");
-		mapper.writeValue(resultFile, arrayTowns);
+		try {
+			mapper.writeValue(resultFile, arrayTowns);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * READ DATA FORM FILE
-	 * 
-	 * @return arrayCities
-	 * 
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
-	 * @throws IOException
-	 * @throws ParseException
 	 */
-	protected ArrayList<City> readJSON() throws JsonParseException, JsonMappingException, IOException, ParseException {
+	protected ArrayList<City> readJSON() {
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -88,18 +78,27 @@ public class JacksonTester {
 
 		// mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		File resultFile = new File("cities.json");
-		x = mapper.readValue(resultFile, mapper.getTypeFactory().constructCollectionType(List.class, City.class));
+		try {
+			x = mapper.readValue(resultFile, mapper.getTypeFactory().constructCollectionType(List.class, City.class));
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return x;
 	}
 
 	/**
 	 * ADD NEW CITIES IN FILE
-	 * 
-	 * @param newArrayTowns
 	 */
 	@SuppressWarnings("unchecked")
-	protected void addNewCity(ArrayList<City> newArrayTowns) {
+	public void addNewCity(ArrayList<City> newArrayTowns) {
 
 		JSONParser jsonParser = new JSONParser();
 

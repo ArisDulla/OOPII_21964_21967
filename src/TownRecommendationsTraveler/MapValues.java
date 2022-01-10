@@ -9,26 +9,6 @@ import java.util.Iterator;
 public class MapValues {
 
 	/**
-	 * CREAT HASH MAP
-	 * 
-	 * @return HASH MAP
-	 */
-	protected static HashMap<String, ArrayList<String>> creatHashMap() {
-
-		HashMap<String, ArrayList<String>> hm = new HashMap<String, ArrayList<String>>();
-
-		hm.put("Monday", new ArrayList<String>());
-		hm.put("Tuesday", new ArrayList<String>());
-		hm.put("Friday", new ArrayList<String>());
-		hm.put("Wednesday", new ArrayList<String>());
-		hm.put("Thursday", new ArrayList<String>());
-		hm.put("Sunday", new ArrayList<String>());
-		hm.put("Saturday", new ArrayList<String>());
-
-		return hm;
-	}
-
-	/**
 	 * Get timestamp form town
 	 * 
 	 * @param town
@@ -49,7 +29,7 @@ public class MapValues {
 	 * @param town
 	 * @param hms
 	 */
-	protected static void setValues(City town, HashMap<String, ArrayList<String>> hm) {
+	public static void setValues(City town, HashMap<String, ArrayList<String>> hm) {
 
 		String day, nameCity;
 

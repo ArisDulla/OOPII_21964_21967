@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ClosestCity {
 
-	protected static String nearbyCity(PerceptronTraveller traveller, ArrayList<City> cities) {
+	public static String nearbyCity(PerceptronTraveller traveller, ArrayList<City> cities) {
 		ArrayList<City> recommendedCities = new ArrayList<City>();
 		double min = 1;
 		String nearbyCity = null;
@@ -37,7 +37,7 @@ public class ClosestCity {
 		}
 		if (nearbyCity == null) {
 
-			System.out.println("there are no cities in the array");
+			return "there are no cities in the array";
 		}
 		/**
 		 * @return closest City
