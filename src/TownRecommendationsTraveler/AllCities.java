@@ -34,5 +34,5 @@ public class AllCities {
 
 	public static HashMap<String, ArrayList<String>> getHm() {
 		return hm;
-	}	
-} 
+	}
+}

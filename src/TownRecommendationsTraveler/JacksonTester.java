@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -76,6 +77,8 @@ public class JacksonTester {
 
 		ArrayList<City> x = new ArrayList<>();
 
+		WriteManyLogs.getObj().writeToLog(Level.INFO, " read data from JSON file  ");
+		
 		// mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		File resultFile = new File("cities.json");
 		try {
@@ -102,6 +105,8 @@ public class JacksonTester {
 
 		JSONParser jsonParser = new JSONParser();
 
+		WriteManyLogs.getObj().writeToLog(Level.INFO, " ADD NEW CITIES IN JSON -- UPDATE JSON --- ");
+		
 		try {
 			Object obj = jsonParser.parse(new FileReader("cities.json"));
 			JSONArray jsonArray = (JSONArray) obj;

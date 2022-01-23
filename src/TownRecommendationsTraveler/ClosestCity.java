@@ -4,18 +4,19 @@ import java.util.ArrayList;
 
 public class ClosestCity {
 
-	public static String nearbyCity(PerceptronTraveller traveller, ArrayList<City> cities) {
-		ArrayList<City> recommendedCities = new ArrayList<City>();
+	public static String nearbyCity(PerceptronTraveller traveller, ArrayList<String> namesCities) {
+
 		double min = 1;
 		String nearbyCity = null;
 		double distance;
 		String cityName;
-		ArrayList<String> namesCities;
 
+		ArrayList<City> cities = AllCities.getArrayTowns();
 		/**
 		 * Search recommended cities
 		 */
-		namesCities = traveller.recommend(cities, recommendedCities);
+
+		// namesCities = traveller.recommend();
 
 		/**
 		 * search closest City

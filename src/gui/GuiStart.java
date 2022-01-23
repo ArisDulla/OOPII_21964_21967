@@ -24,6 +24,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -36,6 +37,12 @@ import TownRecommendationsTraveler.AllCities;
 import TownRecommendationsTraveler.City;
 import TownRecommendationsTraveler.JacksonTester;
 import TownRecommendationsTraveler.NewTraveller;
+import TownRecommendationsTraveler.PerceptronTraveller;
+import TownRecommendationsTraveler.WriteManyLogs;
+
+import static gui.Email.sentEmail;
+
+import java.util.logging.Level;
 
 public class GuiStart {
 
@@ -48,7 +55,8 @@ public class GuiStart {
 	private static int index = 0;
 	private JLabel question;
 	private int option;
-	private JButton sumbmitButton, main, repeat, updateJsonButton;
+	private JButton sumbmitButton, main, repeat, updateJsonButton, sentEmail;
+	PerceptronTraveller newTraveller;
 
 	public GuiStart() {
 		prepareGUI();
@@ -57,12 +65,12 @@ public class GuiStart {
 	public static void main(String[] args) {
 
 		new AllCities();
+		new WriteManyLogs();
 
 		JacksonTester tester = new JacksonTester();
 		/**
 		 * READ IN FILE and load
 		 */
-
 		tester.call(AllCities.getArrayTowns());
 
 		/**
@@ -76,6 +84,7 @@ public class GuiStart {
 		 */
 		GuiStart actionListenerDemo = new GuiStart();
 		actionListenerDemo.startMainWindows();
+
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -99,14 +108,7 @@ public class GuiStart {
 		 */
 		mainFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
-
-				/*
-				 * UPDATE JSON
-				 */
-				JacksonTester tester = new JacksonTester();
-				if (AllCities.getNewArrayTowns().size() > 0)
-					tester.addNewCity(AllCities.getNewArrayTowns());
-				System.exit(0);
+				new exit();
 			}
 		});
 
@@ -124,6 +126,8 @@ public class GuiStart {
 	 * --------------------- START MENU MAIN GUI ---------------------------------
 	 */
 	private void startMainWindows() {
+
+		WriteManyLogs.getObj().writeToLog(Level.INFO, " OPEN MENU GUI ");
 
 		controlPanel.removeAll();
 		statusLabel.setText("");
@@ -196,23 +200,14 @@ public class GuiStart {
 		/**
 		 * ----------- EXIT ACTION LISTENER -------------
 		 */
-		exitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				/*
-				 * UPDATE JSON
-				 */
-				JacksonTester tester = new JacksonTester();
-				if (AllCities.getNewArrayTowns().size() > 0)
-					tester.addNewCity(AllCities.getNewArrayTowns());
-				System.exit(0);
-			}
-		});
+		exitButton.addActionListener(new exit());
+
 		/**
 		 * ADD PANEL
 		 */
 		controlPanel.add(panel);
 		mainFrame.setVisible(true);
+
 	}
 
 	// ------------------------------------------------------------------------------------------------------------------------
@@ -222,6 +217,8 @@ public class GuiStart {
 	class RecommendCityActionButton implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
+
+			WriteManyLogs.getObj().writeToLog(Level.INFO, " BUTTON RECOMMEND  CITY ");
 
 			controlPanel.removeAll();
 			headerLabel.setText("");
@@ -259,7 +256,7 @@ public class GuiStart {
 
 					String value = ageField.getText();
 					int len = value.length();
-					if (len >= 3) { 
+					if (len >= 3) {
 						ageField.setEditable(false);
 						if (ke.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 							ageField.setEditable(true);
@@ -341,6 +338,8 @@ public class GuiStart {
 	class Questions implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
+			WriteManyLogs.getObj().writeToLog(Level.INFO, " Questions GUI  ");
+
 			controlPanel.removeAll();
 			statusLabel.setText("");
 			JPanel panel1 = new JPanel();
@@ -364,16 +363,11 @@ public class GuiStart {
 			headerLabel.setText("What place do you like to visit the most ? ");
 
 			String[] questions = new String[] { "Firstly , Do you prefer going out to cafe ?",
-					"Do you prefer going out to sea ?", "Do you prefer going out to museums ?",
-					"Do you prefer going out to restaurants ?", "Do you prefer going out to stadium ?",
-					"Do you prefer going out to bar ?", "Do you prefer going out to amusement park ?",
-					"What kind of weather do you prefer ?", "Do you prefer has cloudy weather ?",
-					"Do you prefer to travel long distances ?" };
+					"Do you prefer going out to sea ?           ", "Do you prefer going out to museums ?       ",
+					"Do you prefer going out to restaurants ?   ", "Do you prefer going out to stadium ?       ",
+					"Do you prefer going out to bar ?           ", "Do you prefer going out to amusement park ?" };
 
-			String[][] answer = new String[][] { { "YES", "MAYBE", "NO" }, { "YES", "MAYBE", "NO" },
-					{ "YES", "MAYBE", "NO" }, { "YES", "MAYBE", "NO" }, { "YES", "MAYBE", "NO" },
-					{ "YES", "MAYBE", "NO" }, { "YES", "MAYBE", "NO" }, { "Cold", "Cool", "Warm" },
-					{ "YES", "MAYBE", "NO" }, { "YES", "MAYBE", "NO" } };
+			String[] answer = new String[] { "YES", "MAYBE", "NO" };
 
 			explicitly = new ArrayList<>();
 			/**
@@ -396,9 +390,9 @@ public class GuiStart {
 			 * BUTTON GROUP OPTION
 			 */
 			ButtonGroup options = new ButtonGroup();
-			JRadioButton rb1 = new MyJRadioButton(answer[index][0]);
-			JRadioButton rb2 = new MyJRadioButton(answer[index][1]);
-			JRadioButton rb3 = new MyJRadioButton(answer[index][2]);
+			JRadioButton rb1 = new MyJRadioButton(answer[0]);
+			JRadioButton rb2 = new MyJRadioButton(answer[1]);
+			JRadioButton rb3 = new MyJRadioButton(answer[2]);
 
 			rb1.addItemListener(new CustomItemListener());
 			rb2.addItemListener(new CustomItemListener());
@@ -439,12 +433,12 @@ public class GuiStart {
 			gbc.gridwidth = 4;
 			panel1.add(rb3, gbc); // ADD 3 RADIO
 			gbc.gridx = 1;
-			gbc.gridy = 6;
+			gbc.gridy = 4;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			gbc.gridwidth = 201;
 			panel1.add(nextButton, gbc); // ADD BUTTON NEXT
 			gbc.gridx = 1;
-			gbc.gridy = 8;
+			gbc.gridy = 3;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			panel1.add(backButton, gbc);
 
@@ -482,18 +476,15 @@ public class GuiStart {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 
-					if (index >= 0 && index < 9) {
+					if (index >= 0 && index < 6) {
 						question.setText(questions[++index]);
-
-						rb1.setText(answer[index][0]);
-						rb2.setText(answer[index][1]);
-						rb3.setText(answer[index][2]);
 
 						options.clearSelection();
 
 						explicitly.add(option);
 						nextButton.setEnabled(false);
-					} else if (index == 9) {
+					} else if (index == 6) {
+						explicitly.add(option);
 						startReccomendCity(explicitly);
 						statusLabel.setText("");
 						index = 0;
@@ -514,7 +505,7 @@ public class GuiStart {
 						RecommendCityActionButton z = new RecommendCityActionButton();
 						z.actionPerformed(e);
 
-					} else if (index <= 9) {
+					} else if (index <= 6) {
 
 						explicitly.remove(index);
 						question.setText(questions[--index]);
@@ -537,14 +528,9 @@ public class GuiStart {
 			myPanel.setSize(1400, 1400);
 
 			/**
-			 * GridBagLayout layout
-			 */
-			GridBagConstraints gbc = new GridBagConstraints();
-
-			/**
 			 * BUTTON MENU
 			 */
-			backButton = new MyJButton("GO TO MENU"); // BUTTON backButton CITIES
+			backButton = new MyJButton("MENU"); // BUTTON backButton CITIES
 			backButton.addActionListener(new GoToMenu()); // ACTION LISTENER
 
 			/**
@@ -557,7 +543,8 @@ public class GuiStart {
 			/**
 			 * FIND CITIES
 			 */
-			NewTraveller.createNewTraveller(explicitly, jsp2, AllCities.getArrayTowns());
+
+			newTraveller = NewTraveller.startRecommend(explicitly, jsp2, headerLabel);
 			myPanel.add(jsp2);
 
 			/**
@@ -566,8 +553,22 @@ public class GuiStart {
 			repeat = new MyJButton("REPEAT"); // BUTTON repeat CITIES
 			repeat.addActionListener(new RecommendCityActionButton());
 
-			myPanel.add(repeat, gbc);
-			myPanel.add(backButton, gbc);
+			/**
+			 * BUTTON SENT EMAIL
+			 */
+			sentEmail = new MyJButton("SENT EMAIL"); // BUTTON repeat CITIES
+			sentEmail.addActionListener(new SentEmail());
+			/*
+			 * age = new MyJLabel("Enter your email:"); ageField = new MyJTextField();
+			 * 
+			 * myPanel.add(age); myPanel.add(ageField, gbc);
+			 */
+
+			if (newTraveller != null) {
+				myPanel.add(sentEmail);
+			}
+			myPanel.add(repeat);
+			myPanel.add(backButton);
 			/**
 			 * ADD NEW JPANEL
 			 */
@@ -594,14 +595,42 @@ public class GuiStart {
 				}
 			}
 		}
+
+		class SentEmail implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				jOptionPane();
+				// sentEmail("12",x);
+			}
+		}
+
+		public void jOptionPane() {
+
+			mainFrame.setSize(1600, 800);
+			mainFrame.setVisible(true);
+
+			String s = null;
+			s = (String) JOptionPane.showInputDialog(mainFrame, "Entry your email?");
+
+			if (s != null) {
+				if (s.contains("@gmail.com") || s.contains("@hua.gr")) {
+					sentEmail(s, newTraveller);
+					JOptionPane.showMessageDialog(mainFrame, "Email has been sent successfully");
+
+				}
+			} else {
+				JOptionPane.showMessageDialog(mainFrame, "This email was not sent!");
+			}
+		}
 	}
 
-	// ------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------
 	/**
 	 * ADD NEW CITY BUTTON -------------------------
 	 */
 	class NewCityActionButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+
+			WriteManyLogs.getObj().writeToLog(Level.INFO, " ADD NEW CITY BUTTON GUI ");
 
 			headerLabel.setText("");
 			controlPanel.removeAll();
@@ -680,7 +709,7 @@ public class GuiStart {
 			/**
 			 * BUTTON BACK
 			 */
-			backButton = new MyJButton("BACK"); // BUTTON backButton 
+			backButton = new MyJButton("BACK"); // BUTTON backButton
 			backButton.addActionListener(new GoToMenu());
 			gbc.gridx = 0;
 			gbc.gridy = 6;
@@ -691,7 +720,7 @@ public class GuiStart {
 			/**
 			 * BUTTON NEXT
 			 */
-			sumbmitButton = new MyJButton("SUBMIT"); // BUTTON sumbmitButton 
+			sumbmitButton = new MyJButton("SUBMIT"); // BUTTON sumbmitButton
 			gbc.gridx = 1;
 			gbc.gridy = 5;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -753,9 +782,11 @@ public class GuiStart {
 			newCity = City.createNewCity(AllCities.getArrayTowns(), cityNameDomain, statusLabel);
 
 			if (newCity != null) {
+
 				statusLabel.setText("SUCCESSFULLY REVERT DATA FORM WIKI AND OPEN DATA ");
 				AllCities.getArrayTowns().add(newCity);
 				AllCities.getNewArrayTowns().add(newCity);
+
 				setValues(newCity, AllCities.getHm());
 
 				return true;
@@ -764,13 +795,15 @@ public class GuiStart {
 		}
 	}
 
-	// ---------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------
 	/*
 	 * BUTTON COLLECTION ACTION --------------------------
 	 */
 
 	class CollecionActionButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+
+			WriteManyLogs.getObj().writeToLog(Level.INFO, " BUTTON COLLECTION ");
 
 			controlPanel.removeAll();
 			JPanel myPanel = new JPanel();
@@ -784,7 +817,7 @@ public class GuiStart {
 			/**
 			 * BUTTON BACK
 			 */
-			backButton = new MyJButton("GO TO MENU"); // BUTTON backButton 
+			backButton = new MyJButton("GO TO MENU"); // BUTTON backButton
 			backButton.addActionListener(new GoToMenu()); // ACTION LISTENER
 
 			gbc.gridx = 0;
@@ -794,14 +827,15 @@ public class GuiStart {
 
 			String[] columnNames = { "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday" };
 
-			Object[][] data = new Object[AllCities.getArrayTowns().size() + 2][5];
-		
+			Object[][] data = new Object[AllCities.getArrayTowns().size() + 2][6];
+
 			int index2 = 0;
-			int index ;
+			int index;
 			for (String i : columnNames) {
 				index = 0;
 
 				for (String x1 : AllCities.getHm().get(i)) {
+
 					data[index][index2] = x1;
 					index++;
 				}
@@ -823,7 +857,7 @@ public class GuiStart {
 			tableHeader.setFont(headerFont);
 
 			JScrollPane jsp2 = new JScrollPane();
-			jsp2.setPreferredSize(new Dimension(1200, 450));
+			jsp2.setPreferredSize(new Dimension(1400, 450));
 
 			jsp2.getViewport().add(studentsTable);
 
@@ -836,6 +870,23 @@ public class GuiStart {
 			controlPanel.add(myPanel);
 			mainFrame.setVisible(true);
 
+		}
+	}
+
+	/**
+	 * BUTTON GO TO MENU
+	 */
+	class exit implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+
+			WriteManyLogs.getObj().writeToLog(Level.INFO, " EXIT BUTTON ");
+			/*
+			 * UPDATE JSON
+			 */
+			JacksonTester tester = new JacksonTester();
+			if (AllCities.getNewArrayTowns().size() > 0)
+				tester.addNewCity(AllCities.getNewArrayTowns());
+			System.exit(0);
 		}
 	}
 

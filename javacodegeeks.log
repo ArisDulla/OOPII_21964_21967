@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-01-23T22:04:00.641656Z</date>
+  <millis>1642975440641</millis>
+  <nanos>656000</nanos>
+  <sequence>0</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>1</thread>
+  <message> read data from JSON file  </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:01.074876Z</date>
+  <millis>1642975441074</millis>
+  <nanos>876000</nanos>
+  <sequence>1</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>1</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:05.503074Z</date>
+  <millis>1642975445503</millis>
+  <nanos>74000</nanos>
+  <sequence>2</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> BUTTON RECOMMEND  CITY </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:08.013300Z</date>
+  <millis>1642975448013</millis>
+  <nanos>300000</nanos>
+  <sequence>3</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> Questions GUI  </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:30.586815Z</date>
+  <millis>1642975470586</millis>
+  <nanos>815000</nanos>
+  <sequence>4</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> Email has been sent successfully </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:38.748085Z</date>
+  <millis>1642975478748</millis>
+  <nanos>85000</nanos>
+  <sequence>5</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:39.895078Z</date>
+  <millis>1642975479895</millis>
+  <nanos>78000</nanos>
+  <sequence>6</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> ADD NEW CITY BUTTON GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:41.276715Z</date>
+  <millis>1642975481276</millis>
+  <nanos>715000</nanos>
+  <sequence>7</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:42.156747Z</date>
+  <millis>1642975482156</millis>
+  <nanos>747000</nanos>
+  <sequence>8</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> BUTTON COLLECTION </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:51.230691Z</date>
+  <millis>1642975491230</millis>
+  <nanos>691000</nanos>
+  <sequence>9</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:04:52.754497Z</date>
+  <millis>1642975492754</millis>
+  <nanos>497000</nanos>
+  <sequence>10</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> ADD NEW CITY BUTTON GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:00.248545Z</date>
+  <millis>1642975500248</millis>
+  <nanos>545000</nanos>
+  <sequence>11</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> Retrieve Article form Wikipedia </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:00.248705Z</date>
+  <millis>1642975500248</millis>
+  <nanos>705000</nanos>
+  <sequence>12</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>22</thread>
+  <message> Retrieve data form Open Weather Map</message>
+</record>
+<record>
+  <date>2022-01-23T22:05:01.202291Z</date>
+  <millis>1642975501202</millis>
+  <nanos>291000</nanos>
+  <sequence>13</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> CREAT NEW CITY  </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:04.855403Z</date>
+  <millis>1642975504855</millis>
+  <nanos>403000</nanos>
+  <sequence>14</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> ADD NEW CITIES IN JSON -- UPDATE JSON --- </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:09.572673Z</date>
+  <millis>1642975509572</millis>
+  <nanos>673000</nanos>
+  <sequence>15</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:12.091869Z</date>
+  <millis>1642975512091</millis>
+  <nanos>869000</nanos>
+  <sequence>16</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> EXIT BUTTON </message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-01-23T22:05:20.673803Z</date>
+  <millis>1642975520673</millis>
+  <nanos>803000</nanos>
+  <sequence>0</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>1</thread>
+  <message> read data from JSON file  </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:20.965206Z</date>
+  <millis>1642975520965</millis>
+  <nanos>206000</nanos>
+  <sequence>1</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>1</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:33.722354Z</date>
+  <millis>1642975533722</millis>
+  <nanos>354000</nanos>
+  <sequence>2</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> BUTTON COLLECTION </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:35.664609Z</date>
+  <millis>1642975535664</millis>
+  <nanos>609000</nanos>
+  <sequence>3</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:37.823535Z</date>
+  <millis>1642975537823</millis>
+  <nanos>535000</nanos>
+  <sequence>4</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> EXIT BUTTON </message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-01-23T22:05:45.204905Z</date>
+  <millis>1642975545204</millis>
+  <nanos>905000</nanos>
+  <sequence>0</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>1</thread>
+  <message> read data from JSON file  </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:45.532937Z</date>
+  <millis>1642975545532</millis>
+  <nanos>937000</nanos>
+  <sequence>1</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>1</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:48.703986Z</date>
+  <millis>1642975548703</millis>
+  <nanos>986000</nanos>
+  <sequence>2</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> BUTTON COLLECTION </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:53.612832Z</date>
+  <millis>1642975553612</millis>
+  <nanos>832000</nanos>
+  <sequence>3</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:55.232364Z</date>
+  <millis>1642975555232</millis>
+  <nanos>364000</nanos>
+  <sequence>4</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> BUTTON RECOMMEND  CITY </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:56.257161Z</date>
+  <millis>1642975556257</millis>
+  <nanos>161000</nanos>
+  <sequence>5</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> OPEN MENU GUI </message>
+</record>
+<record>
+  <date>2022-01-23T22:05:57.481471Z</date>
+  <millis>1642975557481</millis>
+  <nanos>471000</nanos>
+  <sequence>6</sequence>
+  <logger>TownRecommendationsTraveler.HandlerLog</logger>
+  <level>INFO</level>
+  <class>TownRecommendationsTraveler.HandlerLog</class>
+  <method>writeToLog</method>
+  <thread>17</thread>
+  <message> EXIT BUTTON </message>
+</record>
+</log>

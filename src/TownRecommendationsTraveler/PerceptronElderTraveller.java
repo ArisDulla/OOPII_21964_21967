@@ -2,11 +2,12 @@ package TownRecommendationsTraveler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
-public class PerceptronElderTraveller implements PerceptronTraveller {
+public class PerceptronElderTraveller extends Traveller implements PerceptronTraveller {
 
 	@Override
-	public ArrayList<String> recommend(ArrayList<City> cities, ArrayList<City> recommendedCities) {
+	public ArrayList<String> recommend() {
 		double[] weightsBias = new double[] { 0, -1, 0, 1, -1, -1, -1, 0, 0, 1, -0.11 };
 		// [0] = CAFE , [1] = SEA, [2] = MUSEUMS, [3] = RESTAURANTS, [4] = STADIUM,
 		// [5] = BAR ,[6] = AMUSEMENT PARK, [7] = KLEVIN, [8] = CLOUNDS, [9] = COORDS
@@ -16,6 +17,8 @@ public class PerceptronElderTraveller implements PerceptronTraveller {
 		double[] array;
 		double wx;
 		int len;
+
+		ArrayList<City> cities = AllCities.getArrayTowns();
 
 		len = cities.size();
 		for (int j = 0; j < len; j++) {
@@ -32,8 +35,8 @@ public class PerceptronElderTraveller implements PerceptronTraveller {
 				namesCities.add(cities.get(j).getCityName());
 				recommendedCities.add(cities.get(j));
 			}
-
 		}
+
 		return namesCities;
 	}
 
@@ -69,10 +72,21 @@ public class PerceptronElderTraveller implements PerceptronTraveller {
 		Collections.sort(list, coordsCompare);
 
 		for (City city : list) {
-			namesCities.add(city.getCityName());			
+			namesCities.add(city.getCityName());
 		}
-		
-		
+
 		return namesCities;
+	}
+
+	@Override
+	public ArrayList<City> getCitiesRecommend() {
+
+		return recommendedCities;
+	}
+
+	@Override
+	public Map<City, Double> personalized(int[] candidateTravellerCriteria) {
+
+		return personalizedRecommend(candidateTravellerCriteria);
 	}
 }

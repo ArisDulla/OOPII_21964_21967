@@ -57,6 +57,7 @@ public class MapValues {
 		System.out.println("\n");
 		for (String i : days) {
 			System.out.println(i + "   " + hm.get(i));
+
 		}
 		/*
 		 * Iterator<Entry<String, ArrayList<String>>> it = hm.entrySet().iterator();

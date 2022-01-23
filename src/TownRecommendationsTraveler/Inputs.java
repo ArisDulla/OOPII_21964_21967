@@ -17,13 +17,15 @@ public class Inputs {
 		if (match(city, cities, statusLabel)) {
 			flag = 1;
 		}
-		
+
 		if (!city.matches("[a-z]+")) {
 			flag = 1;
+			statusLabel.setText("That is not String lowercase, please try again.");
 		}
-	
+
 		if (!domain.matches("[a-z]+")) {
 			flag = 1;
+			statusLabel.setText("That is not String lowercase, please try again.");
 		}
 		if (flag == 1) {
 			return true;
@@ -37,7 +39,6 @@ public class Inputs {
 	 */
 	public static boolean match(String nameCity, ArrayList<City> cities, JLabel statusLabel) {
 
-		
 		for (City x : cities) {
 			if (nameCity.equals(x.getCityName())) {
 				statusLabel
